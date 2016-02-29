@@ -32,7 +32,6 @@ $redis = new Client\WithSlavesClient(
 	$Calculator
 );
 
-// var_dump($redis);
 
 $r = $redis->hgetall('U:2439460763:20160219:HistoryData');
 var_dump($r);
