@@ -1,0 +1,7 @@
+tags
+sftp-config.json
+.DS_Store
+/vendor
+.tags
+.tags_sorted_by_file
+composer.phar
