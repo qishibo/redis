@@ -1,11 +1,12 @@
 <?php
 
 namespace Redis\Hash;
+use Redis\Key;
 
 class Consistant extends HashAbstract
 {
     public $keyCalculator;
-    private $node2Position;
+    // private $node2Position;
     private $position2Node;
 
     private $replicas = 128;
@@ -19,7 +20,7 @@ class Consistant extends HashAbstract
 
         for ($i=0; $i < $nodeCount; $i++) {
             $position = $this->keyCalculator->calc($server.$i);
-            $this->node2Position[$server][] = $position;
+            // $this->node2Position[$server][] = $position;
             $this->position2Node[$position] = $server;
         }
     }
@@ -35,7 +36,7 @@ class Consistant extends HashAbstract
             }
         }
 
-        // key is bigger than the max node hash
+        // key is bigger than the max node hash,return the first node
         return reset($this->position2Node);
     }
 
@@ -45,5 +46,10 @@ class Consistant extends HashAbstract
             ksort($this->position2Node);
             $this->positionSorted = true;
         }
+    }
+
+    public function setKeyCalculator(Key\KeyAbstract $keyCalculator)
+    {
+        $this->keyCalculator = $keyCalculator;
     }
 }

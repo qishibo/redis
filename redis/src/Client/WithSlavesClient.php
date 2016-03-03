@@ -55,10 +55,10 @@ class WithSlavesClient extends ClusterClientAbstract
         if (isset($this->links[$type][$node])) {
             return $this->links[$type][$node];
         }
-        $redisNode2ReadNode = str_replace($this->nodePre, '', $node);
-        // var_dump($node, $this->nodePre, $redisNode2ReadNode);die;
+        $redisNode2RealNode = str_replace($this->nodePre, '', $node);
+        // var_dump($node, $this->nodePre, $redisNode2RealNode);die;
         // var_dump($this->config);die;
-        return $this->links[$type][$node] = $this->createConnection($this->config[$type][$redisNode2ReadNode], $this->redisExtension);
+        return $this->links[$type][$node] = $this->createConnection($this->config[$type][$redisNode2RealNode], $this->redisExtension);
     }
 
     private function getMasterOperate()

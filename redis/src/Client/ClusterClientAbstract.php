@@ -20,17 +20,18 @@ abstract class ClusterClientAbstract extends ClientAbstract
         Key\KeyAbstract $keyCalculator
     )
     {
-        // parent::__construct();
+        parent::__construct($config, $redisExtension);
         $this->init($config, $redisExtension, $hash, $keyCalculator);
     }
 
     private function init($config, $redisExtension, $hash, $keyCalculator)
     {
         $this->hash = $hash;
+        $this->keyCalculator = $keyCalculator;
         // var_dump($config, $redisExtension, $hash, $keyCalculator);die;
-        $this->hash->keyCalculator = $keyCalculator;
-        $this->config = $config;
-        $this->redisExtension = $redisExtension;
+        $this->hash->setKeyCalculator($this->keyCalculator);
+        // $this->config = $config;
+        // $this->redisExtension = $redisExtension;
 
         foreach ($config['m'] as $index => $hostPort) {
             // var_dump($source);
@@ -41,18 +42,19 @@ abstract class ClusterClientAbstract extends ClientAbstract
     public function setHashStragety(Hash\HashAbstract $hash)
     {
         $this->hash = $hash;
+        $this->hash->setKeyCalculator($this->keyCalculator);
     }
 
     public function setKeyCalculator(Key\KeyAbstract $keyCalculator)
     {
         $this->keyCalculator = $keyCalculator;
+        $this->hash->setKeyCalculator($keyCalculator);
     }
-    // public function execute()
-    // {
-    //     //
-    // }
 
-    // abstract function getLink();
-    // abstract function doExec();
-
+    public function setNodePre($nodePre)
+    {
+        if (is_string($nodePre)) {
+            $this->nodePre = $nodePre;
+        }
+    }
 }
