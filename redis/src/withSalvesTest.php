@@ -44,3 +44,5 @@ var_dump($r);
 
 $r = $redis->smembers('M:2316410043:Achieved');
 var_dump($r);
+
+var_dump($redis->randomkey());

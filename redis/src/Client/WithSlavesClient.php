@@ -26,10 +26,14 @@ class WithSlavesClient extends ClusterClientAbstract
 
     public function doExec($method, $params)
     {
-        // $params[0] is the redis key,and it won't be empty!
-        if (empty($params[0])) {
+        // $params[0] is the redis key,and it won't be empty! except randomkey
+        if (empty($params[0]) && ($method != 'randomkey')) {
             return false;
         }
+
+        // randomkey $params is an empty array,here for avoid warning
+        empty($params[0]) && $params[0] = '';
+
         $node = $this->hash->lookUp($params[0]);
 
         if ($this->getType($method) === 'm') {
