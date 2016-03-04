@@ -13,15 +13,14 @@ class Consistant extends HashAbstract
 
     private $positionSorted = false;
 
-    public function addNode($server, $weight = 1)
+    public function addNode($node, $weight = 1)
     {
-        // $serverNode = $this->keyCalculator->calc($server);
-        $nodeCount = $this->replicas * $weight;
+        $nodeCount = ceil($this->replicas * $weight);
 
         for ($i=0; $i < $nodeCount; $i++) {
-            $position = $this->keyCalculator->calc($server.$i);
-            // $this->node2Position[$server][] = $position;
-            $this->position2Node[$position] = $server;
+            $position = $this->keyCalculator->calc($node . $i);
+            // $this->node2Position[$node][] = $position;
+            $this->position2Node[$position] = $node;
         }
     }
     public function lookUp($key)
@@ -40,6 +39,9 @@ class Consistant extends HashAbstract
         return reset($this->position2Node);
     }
 
+    /**
+     * sort the position2Node array,make it a right consistant hash ring
+     */
     private function checkSortNode()
     {
         if (!$this->positionSorted) {

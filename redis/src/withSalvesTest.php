@@ -7,18 +7,14 @@ use Redis\Key;
 
 include 'Autoload.php';
 
-// for secret..
-$rawConfig = file('/Users/shibo/redisConfig');
-$rawConfig = array_map(function($v){return trim($v);}, $rawConfig);
-
 $config = [
     'm' =>[
-        ['host' => $rawConfig[0], 'port' => $rawConfig[1], 'weight' => 3],
-        ['host' => $rawConfig[0], 'port' => $rawConfig[1]],
+        ['host' => '127.0.0.1', 'port' => 6379, 'weight' => 1],
+        ['host' => '127.0.0.1', 'port' => 6380],
     ],
     's' =>[
-        ['host' => $rawConfig[0], 'port' => $rawConfig[1]],
-        ['host' => $rawConfig[0], 'port' => $rawConfig[1]],
+        ['host' => '127.0.0.1', 'port' => 6381],
+        ['host' => '127.0.0.1', 'port' => 6382],
     ]
 ];
 

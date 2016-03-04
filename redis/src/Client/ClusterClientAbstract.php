@@ -21,18 +21,21 @@ abstract class ClusterClientAbstract extends ClientAbstract
     )
     {
         parent::__construct($config, $redisExtension);
-        $this->init($config, $redisExtension, $hash, $keyCalculator);
+        $this->init($hash, $keyCalculator);
     }
 
-    private function init($config, $redisExtension, $hash, $keyCalculator)
+    private function init($hash, $keyCalculator)
     {
         $this->hash = $hash;
         $this->keyCalculator = $keyCalculator;
 
         $this->hash->setKeyCalculator($this->keyCalculator);
 
-        foreach (reset($this->config) as $index => $hostPort) {
-            $this->hash->addNode($this->nodePre . $index);
+        foreach (reset($this->config) as $rawNode => $config) {
+            // default weight is 1
+            empty($config['weight']) && $config['weight'] = 1;
+
+            $this->hash->addNode($this->nodePre . $rawNode, $config['weight']);
         }
     }
 
