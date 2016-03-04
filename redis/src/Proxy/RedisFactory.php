@@ -17,19 +17,18 @@ class RedisFactory
      */
     public static function getRedis(array $config, $type = self::PHPREDIS)
     {
-        // var_dump($config, $type);die;
         switch ($type) {
             case self::PHPREDIS:
             case self::PREDIS:
-                //there is a keng here, when use string in new class,the name path must be full
+                //there is a keng here, when use string in new class,the namespace must be full
                 $redisClassName = '\\Redis\\Proxy\\Extensions\\' . $type;
-                // var_dump($redisClassName);die;
+
                 $redis = new $redisClassName($config);
 
                 break;
 
             default:
-                throw new Expection('undefined redis type');
+                throw new \Exception('undefined redis extensions type, you can add it if you got another php extendion, folder is ' . __DIR__ . '/Extensions/');
         }
 
         return $redis;

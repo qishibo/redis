@@ -12,6 +12,8 @@ abstract class ClientAbstract
     private $redis;
     private $keyCalculator;
 
+    private $denyOperates = [];
+
     abstract function doExec($method, $params);
     // abstract function execute($method, $params);
 
@@ -19,21 +21,52 @@ abstract class ClientAbstract
     {
         $this->config         = $config;
         $this->redisExtension = $redisExtension;
+
+        $this->denyOperates   = $this->getDenyOperates();
     }
 
     public function __call($method, $params)
     {
+        $method = strtolower($method);
+
+        // if exec some denied methods,forbidden
+        if (in_array($method, $this->denyOperates)) {
+            return false;
+        }
+
         return $this->doExec($method, $params);
     }
 
-
+    /**
+     * set php extensions, such as PHPREDIS, PREDIS
+     * see more in Redis\Proxy\RedisFactory
+     *
+     * @param      string  $redisExtension  Redis\Proxy\RedisFactory::PHPREDIS
+     */
     public function setRedisExtension($redisExtension)
     {
         $this->redisExtension = $redisExtension;
     }
 
+    /**
+     * get redis connection
+     *
+     * @param      array   $config  config
+     *
+     * @return     Redis\Proxy\Extensions\ExtensionsAbstract
+     */
     public function createConnection(array $config)
     {
         return Proxy\RedisFactory::getRedis($config, $this->redisExtension);
+    }
+
+    /**
+     * get denied executions,you need to add some methods if you need
+     *
+     * @return     array
+     */
+    private function getDenyOperates()
+    {
+        return ['setoption', 'save', 'bgsave', 'flushdb', 'flushall', 'setoption', 'shutdown', 'slaveof'];
     }
 }
