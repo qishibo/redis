@@ -8,14 +8,10 @@ use Redis\Hash;
 
 abstract class ClientAbstract
 {
-    private $hash;
-    private $redis;
-    private $keyCalculator;
-
+    protected $config;
     private $denyOperates = [];
 
     abstract function doExec($method, $params);
-    // abstract function execute($method, $params);
 
     public function __construct(array $config, $redisExtension)
     {
@@ -57,6 +53,7 @@ abstract class ClientAbstract
      */
     public function createConnection(array $config)
     {
+        var_dump('renew redis ing...port is ' . $config['port']);
         return Proxy\RedisFactory::getRedis($config, $this->redisExtension);
     }
 

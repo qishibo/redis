@@ -10,19 +10,20 @@ class PhpRedis extends ExtensionsAbstract
         $this->config = $config;
         try {
             $this->redis  = new \Redis();
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             die('no phpredis extension...');
         }
         // var_dump($config['host'], $config['port']);die;
         try{
             $this->redis->connect($config['host'], $config['port']);
-        }catch (Exception $e){
+        }catch (\Exception $e){
             var_dump($e->getMessage());
         }
     }
 
     public function execute($method, $params)
     {
+        var_dump($method . ' from port ' . $this->config['port']);
         // var_dump($this->redis);
         // var_dump($method, $params);die;
         !is_array($params) && $params = (array) $params;

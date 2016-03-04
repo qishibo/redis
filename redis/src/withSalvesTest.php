@@ -28,17 +28,28 @@ $redis = new Client\WithSlavesClient(
 	$Calculator
 );
 
+// var_dump($redis->delete('zhangman'));die;
 
-$r = $redis->hgetall('U:2439460763:20160219:HistoryData');
+$field = time() . rand(9, 999);
+$value = uniqid('zhangman=');
+
+var_dump($field, $value);
+
+$r = $redis->hset('shibo', $field, $value);
 var_dump($r);
 
-$r = $redis->hget('U:2439460763:20160219:HistoryData', 'steps');
+$r = $redis->hset('shibo1111199', $field, $value);
 var_dump($r);
 
-$r = $redis->get('U:1790635741:BasicInfo');
+var_dump($redis->hget('shibo', $field));
+
+$r = $redis->hget('shibo1111199', $field);
 var_dump($r);
 
-$r = $redis->smembers('M:2316410043:Achieved');
-var_dump($r);
+var_dump($redis->set('name', uniqid()));
+var_dump($redis->get('name'));
+var_dump($redis->set('age', uniqid()));
+var_dump($redis->get('age'));
 
-var_dump($redis->randomkey());
+// var_dump($redis);
+// var_dump($redis->randomkey());

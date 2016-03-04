@@ -13,6 +13,14 @@ abstract class ClusterClientAbstract extends ClientAbstract
 
     protected $nodePre = 'qii';
 
+    /**
+     * __construct
+     *
+     * @param      array              $config          config of redis, include host, port, weight
+     * @param      string             $redisExtension  type of php redis extension
+     * @param      Hash\HashAbstract  $hash            hash object
+     * @param      Key\KeyAbstract    $keyCalculator   keyCalculator object
+     */
     public function __construct(
         array $config,
         $redisExtension = Proxy\RedisFactory::PHPREDIS,
@@ -24,9 +32,15 @@ abstract class ClusterClientAbstract extends ClientAbstract
         $this->init($hash, $keyCalculator);
     }
 
+    /**
+     * init
+     *
+     * @param      Hash\HashAbstract  $hash           hash object
+     * @param      Key\KeyAbstract    $keyCalculator  keyCalculator object
+     */
     private function init($hash, $keyCalculator)
     {
-        $this->hash = $hash;
+        $this->hash          = $hash;
         $this->keyCalculator = $keyCalculator;
 
         $this->hash->setKeyCalculator($this->keyCalculator);
@@ -39,18 +53,34 @@ abstract class ClusterClientAbstract extends ClientAbstract
         }
     }
 
+    /**
+     * set hash object for find node, such as consistant hash
+     *
+     * @param      Hash\HashAbstract  $hash   hash pbject
+     */
     public function setHashStragety(Hash\HashAbstract $hash)
     {
         $this->hash = $hash;
         $this->hash->setKeyCalculator($this->keyCalculator);
     }
 
+    /**
+     * set KeyCalculator to hash object, for calcing key to hash number
+     *
+     * @param      Key\KeyAbstract  $keyCalculator  keyCalculator object
+     */
     public function setKeyCalculator(Key\KeyAbstract $keyCalculator)
     {
         $this->keyCalculator = $keyCalculator;
         $this->hash->setKeyCalculator($keyCalculator);
     }
 
+    /**
+     * set the prefix for the node
+     * if raw node is 'u0' in your config, then the node add to the hash ring will change to 'qiiu0'
+     *
+     * @param      string  $nodePre  prefix of the node
+     */
     public function setNodePre($nodePre)
     {
         if (is_string($nodePre)) {
@@ -58,3 +88,4 @@ abstract class ClusterClientAbstract extends ClientAbstract
         }
     }
 }
+// end of file ClusterClientAbstract.php
