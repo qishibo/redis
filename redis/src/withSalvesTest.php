@@ -13,7 +13,7 @@ $rawConfig = array_map(function($v){return trim($v);}, $rawConfig);
 
 $config = [
     'm' =>[
-        ['host' => $rawConfig[0], 'port' => $rawConfig[1]],
+        ['host' => $rawConfig[0], 'port' => $rawConfig[1], 'weight' => 3],
         ['host' => $rawConfig[0], 'port' => $rawConfig[1]],
     ],
     's' =>[

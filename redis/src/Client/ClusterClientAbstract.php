@@ -28,13 +28,10 @@ abstract class ClusterClientAbstract extends ClientAbstract
     {
         $this->hash = $hash;
         $this->keyCalculator = $keyCalculator;
-        // var_dump($config, $redisExtension, $hash, $keyCalculator);die;
-        $this->hash->setKeyCalculator($this->keyCalculator);
-        // $this->config = $config;
-        // $this->redisExtension = $redisExtension;
 
-        foreach ($config['m'] as $index => $hostPort) {
-            // var_dump($source);
+        $this->hash->setKeyCalculator($this->keyCalculator);
+
+        foreach (reset($this->config) as $index => $hostPort) {
             $this->hash->addNode($this->nodePre . $index);
         }
     }

@@ -8,6 +8,10 @@ use Redis\Key;
 
 class WithSlavesClient extends ClusterClientAbstract
 {
+
+    const MASTER = 'm';
+    const SLAVE = 's';
+
     private $masterOperate;
     private $slaveOperate;
 
@@ -36,11 +40,11 @@ class WithSlavesClient extends ClusterClientAbstract
 
         $node = $this->hash->lookUp($params[0]);
 
-        if ($this->getType($method) === 'm') {
-            $redis = $this->getConnection('m', $node);
+        if ($this->getType($method) === self::MASTER) {
+            $redis = $this->getConnection(self::MASTER, $node);
         }
         else {
-            $redis = $this->getConnection('s', $node);
+            $redis = $this->getConnection(self::SLAVE, $node);
         }
 // var_dump($redis);die;
         return $redis->execute($method, $params);
@@ -49,9 +53,9 @@ class WithSlavesClient extends ClusterClientAbstract
     private function getType($method)
     {
         if (in_array($method, $this->masterOperate)) {
-            return 'm';
+            return self::MASTER;
         }
-        return 's';
+        return self::SLAVE;
     }
 
     private function getConnection($type, $node)
@@ -67,12 +71,12 @@ class WithSlavesClient extends ClusterClientAbstract
 
     private function getMasterOperate()
     {
-        return ['delete', 'set', 'hset', 'zadd'];
+        return ['set', 'setex', 'setnx', 'del', 'delete', 'incr', 'incrby', 'decr', 'decrby', 'lpush', 'rpush', 'lpushx', 'rpushx', 'lpop', 'rpop', 'blpop', 'brpop', 'lset', 'ltrim', 'listtrim', 'lrem', 'lremove', 'linsert', 'sadd', 'srem', 'sremove', 'smove', 'spop', 'getset', 'move', 'rename', 'renamekey', 'renamenx', 'settimeout', 'expire', 'expireat', 'append', 'setrange', 'setbit', 'sort', 'persist', 'mset', 'rpoplpush', 'zadd', 'zdelete', 'zrem', 'zremrangebyscore', 'zdeleterangebyscore', 'zincrby', 'hset', 'hincrby', 'hmset', 'hdel'];
     }
 
     private function getSlaveOperate()
     {
-        return ['get', 'hget', 'zscore'];
+        return ['get', 'exists', 'getmultiple', 'lsize', 'lindex', 'lget', 'lrange', 'lgetrange', 'sismember', 'scontains', 'scard', 'ssize', 'srandmember', 'sinter', 'sinterstore', 'sunion', 'sunionstore', 'sdiff', 'sdiffstore', 'smembers', 'sgetmembers', 'randomkey', 'keys', 'getkeys', 'dbsize', 'type', 'getrange', 'strlen', 'getbit', 'info', 'ttl', 'zrange', 'zrevrange', 'zrangebyscore', 'zrevrangebyscore', 'zcount', 'zsize', 'zcard', 'zscore', 'zrank', 'zrevrank', 'zunion', 'zinter', 'hget', 'hlen', 'hkeys', 'hvals', 'hgetall', 'hexists', 'hmget'];
     }
 
 }
