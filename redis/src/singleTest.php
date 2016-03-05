@@ -13,7 +13,7 @@ $redis = new Client\SingleClient(
     Proxy\RedisFactory::PHPREDIS
 );
 
-var_dump($redis);die;
+// var_dump($redis);die;
 
 // var_dump($redis->delete('zhangman'));die;
 

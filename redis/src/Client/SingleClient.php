@@ -40,7 +40,7 @@ class SingleClient extends ClientAbstract
         // when randomkey, $params is an empty array,here for avoid php warning
         empty($params[0]) && $params[0] = '';
 
-        $reids = $this->getConnection();
+        $redis = $this->getConnection();
 
         return $redis->execute($method, $params);
     }
