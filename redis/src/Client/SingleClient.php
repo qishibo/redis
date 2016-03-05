@@ -59,3 +59,4 @@ class SingleClient extends ClientAbstract
     }
 
 }
+// end of file SingleClient.php
