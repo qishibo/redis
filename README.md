@@ -4,7 +4,7 @@ Redis client for php, which supports single redis server, or redis Master-Slave 
 
 ## Example
 
-1.**single redis server **
+1.**single redis server**
 
 read & write operations are all executed in the single serve.
 
