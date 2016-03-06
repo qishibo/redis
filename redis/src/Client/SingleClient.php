@@ -32,17 +32,7 @@ class SingleClient extends ClientAbstract
      */
     public function doExec($method, $params)
     {
-        // $params[0] is the redis key,and it won't be empty! except randomkey
-        if (empty($params[0]) && ($method != 'randomkey')) {
-            return false;
-        }
-
-        // when randomkey, $params is an empty array,here for avoid php warning
-        empty($params[0]) && $params[0] = '';
-
-        $redis = $this->getConnection();
-
-        return $redis->execute($method, $params);
+        return $this->getConnection()->execute($method, $params);
     }
 
     /**

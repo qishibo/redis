@@ -30,6 +30,14 @@ abstract class ClientAbstract
             return false;
         }
 
+        // $params[0] is the redis key,and it won't be empty! except randomkey
+        if (empty($params[0]) && ($method != 'randomkey')) {
+            return false;
+        }
+
+        // when randomkey, $params is an empty array,here for avoid php warning
+        empty($params[0]) && $params[0] = '';
+
         return $this->doExec($method, $params);
     }
 
