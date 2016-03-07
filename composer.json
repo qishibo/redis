@@ -1,0 +1,16 @@
+{
+    "name": "shibo/redis",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "qii",
+            "email": "www.qii@qq.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "\\Redis": "src/"
+        }
+    },
+    "require": {}
+}
