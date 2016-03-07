@@ -4,7 +4,7 @@ use Redis\Proxy;
 use Redis\Client;
 
 
-include 'Autoload.php';
+include '../src/Autoload.php';
 
 $config = ['host' => '127.0.0.1', 'port' => 6379, 'weight' => 1];
 

@@ -3,7 +3,7 @@
 use Redis\Key;
 use Redis\Hash;
 
-include 'Autoload.php';
+include '../src/Autoload.php';
 
 $hash = new Hash\Consistant();
 $calc = new Key\Cr32();

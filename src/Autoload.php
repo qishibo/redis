@@ -29,3 +29,4 @@ class AutoLoader
 }
 
 (new AutoLoader())->register();
+// end of file Autoload.php

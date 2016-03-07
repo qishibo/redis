@@ -5,7 +5,7 @@ use Redis\Client;
 use Redis\Hash;
 use Redis\Key;
 
-include 'Autoload.php';
+include '../src/Autoload.php';
 
 $config = [
     'm' =>[
