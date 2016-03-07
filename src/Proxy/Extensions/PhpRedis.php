@@ -25,8 +25,6 @@ class PhpRedis extends ExtensionsAbstract
 
     public function execute($method, $params)
     {
-        var_dump($method . ' from port ' . $this->config['port']);
-
         !is_array($params) && $params = (array) $params;
 
         return call_user_func_array([$this->redis, $method], $params);

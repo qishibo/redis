@@ -61,7 +61,6 @@ abstract class ClientAbstract
      */
     public function createConnection(array $config)
     {
-        var_dump('renew redis ing...port is ' . $config['port']);
         return Proxy\RedisFactory::getRedis($config, $this->redisExtension);
     }
 
