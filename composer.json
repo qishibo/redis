@@ -12,5 +12,8 @@
             "Redis\\": "src/"
         }
     },
-    "require": {}
+    "require": {},
+    "require-dev": {
+        "mockery/mockery": "^1.0@dev"
+    }
 }
