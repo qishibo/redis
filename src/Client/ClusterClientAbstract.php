@@ -23,9 +23,9 @@ abstract class ClusterClientAbstract extends ClientAbstract
      */
     public function __construct(
         array $config,
-        $redisExtension = Drivers\RedisFactory::PHPREDIS,
         Hash\HashInterface $hash,
-        Key\KeyInterface $keyCalculator
+        Key\KeyInterface $keyCalculator,
+        $redisExtension = Drivers\RedisFactory::PHPREDIS
     )
     {
         parent::__construct($config, $redisExtension);

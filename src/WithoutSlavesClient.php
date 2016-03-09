@@ -18,12 +18,12 @@ class WithoutSlavesClient extends Client\ClusterClientAbstract
      */
     public function __construct(
         array $config,
-        $redisExtension = Drivers\RedisFactory::PHPREDIS,
         Hash\HashInterface $hash,
-        Key\KeyInterface $keyCalculator
+        Key\KeyInterface $keyCalculator,
+        $redisExtension = Drivers\RedisFactory::PHPREDIS
     )
     {
-        parent::__construct([$config], $redisExtension, $hash, $keyCalculator);
+        parent::__construct([$config], $hash, $keyCalculator, $redisExtension);
     }
 
     /**

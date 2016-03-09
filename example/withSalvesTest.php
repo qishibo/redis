@@ -22,10 +22,10 @@ $hash = new Hash\Consistant();
 $Calculator = new Key\Cr32();
 
 $redis = new WithSlavesClient(
-	$config,
-	RedisFactory::PHPREDIS,
-	$hash,
-	$Calculator
+    $config,
+    $hash,
+    $Calculator,
+    RedisFactory::PHPREDIS
 );
 
 // var_dump($redis->delete('zhangman'));die;

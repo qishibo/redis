@@ -17,9 +17,9 @@ $Calculator = new Key\Cr32();
 
 $redis = new WithoutSlavesClient(
     $config,
-    RedisFactory::PHPREDIS,
     $hash,
-    $Calculator
+    $Calculator,
+    RedisFactory::PHPREDIS
 );
 
 // var_dump($redis->delete('zhangman'));die;
