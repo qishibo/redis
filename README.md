@@ -44,8 +44,12 @@ $config = [
     ['host' => '127.0.0.1', 'port' => 6380],
 ];
 
+// hash stragety, you can also define your stragety in Hash folder
 $hash = new Hash\Consistant();
+
+// key hasher, such as new Md5 or Cr32, you can add it in Key folder
 $Calculator = new Key\Cr32();
+// $Calculator = new Key\Md5();
 
 $redis = new WithoutSlavesClient(
     $config,
@@ -84,8 +88,12 @@ $config = [
     ]
 ];
 
+// hash stragety, you can also define your stragety in Hash folder
 $hash = new Hash\Consistant();
+
+// key hasher, such as new Md5 or Cr32, you can add it in Key folder
 $Calculator = new Key\Cr32();
+// $Calculator = new Key\Md5();
 
 $redis = new WithSlavesClient(
     $config,
