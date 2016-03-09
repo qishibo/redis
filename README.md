@@ -1,7 +1,25 @@
-# Redis
+# PHP Redis
 Redis client for php, which supports single redis server, or redis Master-Slave clusters.
 
 *building...*
+
+## Install
+
+1.**composer is recommended**
+
+`composer require shibo/redis`
+
+or in your `composer.json`
+
+```json
+{
+    "require": {
+        "shibo/redis" : "^1.0"
+    }
+}
+```
+
+2.**if you do not use composer, you should `include 'Autoload.php'` in your code**
 
 
 ## Example
