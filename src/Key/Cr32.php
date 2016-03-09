@@ -2,7 +2,7 @@
 
 namespace Redis\Key;
 
-class Cr32 extends KeyAbstract
+class Cr32 implements KeyInterface
 {
     /**
      * calc the key to hash number

@@ -1,6 +1,8 @@
 # Redis
 Redis client for php, which supports single redis server, or redis Master-Slave clusters.
 
+*building...*
+
 
 ## Example
 
@@ -9,7 +11,7 @@ Redis client for php, which supports single redis server, or redis Master-Slave 
 read & write operations are all executed in the single serve.
 
 ```php
-use Redis\Proxy;
+use Redis\Drivers;
 use Redis\Client;
 
 include 'Autoload.php';
@@ -18,7 +20,7 @@ $config = ['host' => '127.0.0.1', 'port' => 6379];
 
 $redis = new Client\SingleClient(
     $config,
-    Proxy\RedisFactory::PHPREDIS
+    Drivers\RedisFactory::PHPREDIS
 );
 
 $redis->set('name', 'qii404'); // true
@@ -30,7 +32,7 @@ $redis->get('name'); // 'qii404'
 read & write operations executed in the same one server of the cluster.
 
 ```php
-use Redis\Proxy;
+use Redis\Drivers;
 use Redis\Client;
 use Redis\Hash;
 use Redis\Key;
@@ -47,7 +49,7 @@ $Calculator = new Key\Cr32();
 
 $redis = new Client\WithoutSlavesClient(
     $config,
-    Proxy\RedisFactory::PHPREDIS,
+    Drivers\RedisFactory::PHPREDIS,
     $hash,
     $Calculator
 );
@@ -64,7 +66,7 @@ read & write operations executed in the different servers, read from the slave s
 (*You should config it right for 'm' & 's', such as 6381 is slave of 6379, 6382 is slave of 6380*).
 
 ```php
-use Redis\Proxy;
+use Redis\Drivers;
 use Redis\Client;
 use Redis\Hash;
 use Redis\Key;
@@ -87,7 +89,7 @@ $Calculator = new Key\Cr32();
 
 $redis = new Client\WithSlavesClient(
     $config,
-    Proxy\RedisFactory::PHPREDIS,
+    Drivers\RedisFactory::PHPREDIS,
     $hash,
     $Calculator
 );

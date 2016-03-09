@@ -1,16 +1,17 @@
 <?php
 
-use Redis\Proxy;
-use Redis\Client;
+use \Redis\SingleClient;
+use \Redis\Drivers\RedisFactory;
 
 
 include '../src/Autoload.php';
+// include '../vendor/autoload.php';
 
 $config = ['host' => '127.0.0.1', 'port' => 6379, 'weight' => 1];
 
-$redis = new Client\SingleClient(
+$redis = new SingleClient(
     $config,
-    Proxy\RedisFactory::PHPREDIS
+    RedisFactory::PHPREDIS
 );
 
 // var_dump($redis);die;

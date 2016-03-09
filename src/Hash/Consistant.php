@@ -4,7 +4,7 @@ namespace Redis\Hash;
 
 use Redis\Key;
 
-class Consistant extends HashAbstract
+class Consistant implements HashInterface
 {
     public $keyCalculator;
     private $position2Node;
@@ -55,9 +55,9 @@ class Consistant extends HashAbstract
     /**
      * set the KeyCalculator, which use for calcing key to hash Number
      *
-     * @param      Key\KeyAbstract  $keyCalculator  KeyCalculator
+     * @param      Key\KeyInterface  $keyCalculator  KeyCalculator
      */
-    public function setKeyCalculator(Key\KeyAbstract $keyCalculator)
+    public function setKeyCalculator(Key\KeyInterface $keyCalculator)
     {
         $this->keyCalculator = $keyCalculator;
     }

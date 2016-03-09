@@ -1,6 +1,6 @@
 <?php
 
-// namespace Redis\Proxy\Extensions;
+// namespace Redis\Drivers\Extensions;
 
 class PhpRedisTest extends PHPUnit_Framework_TestCase
 {
@@ -25,7 +25,7 @@ class PhpRedisTest extends PHPUnit_Framework_TestCase
 
     public function testexecute()
     {
-        $redis = Mockery::mock(Redis::class);
+        // $redis = Mockery::mock(Redis::class);
         $redis->shouldReceive('get')->andReturn(function () {
             return func_get_args();
         });

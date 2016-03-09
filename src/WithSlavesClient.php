@@ -1,12 +1,12 @@
 <?php
 
-namespace Redis\Client;
+namespace Redis;
 
-use Redis\Proxy;
-use Redis\Hash;
-use Redis\Key;
+// use Redis\Drivers;
+// use Redis\Hash;
+// use Redis\Key;
 
-class WithSlavesClient extends ClusterClientAbstract
+class WithSlavesClient extends Client\ClusterClientAbstract
 {
 
     const MASTER = 'm';
@@ -20,14 +20,14 @@ class WithSlavesClient extends ClusterClientAbstract
      *
      * @param      array              $config          config of redis, include host, port, weight
      * @param      string             $redisExtension  type of php redis extension
-     * @param      Hash\HashAbstract  $hash            hash object
-     * @param      Key\KeyAbstract    $keyCalculator   keyCalculator object
+     * @param      Hash\HashInterface  $hash            hash object
+     * @param      Key\KeyInterface    $keyCalculator   keyCalculator object
      */
     public function __construct(
         array $config,
-        $redisExtension = Proxy\RedisFactory::PHPREDIS,
-        Hash\HashAbstract $hash,
-        Key\KeyAbstract $keyCalculator
+        $redisExtension = Drivers\RedisFactory::PHPREDIS,
+        Hash\HashInterface $hash,
+        Key\KeyInterface $keyCalculator
     )
     {
         parent::__construct($config, $redisExtension, $hash, $keyCalculator);
@@ -72,7 +72,7 @@ class WithSlavesClient extends ClusterClientAbstract
      * @param      string  $operateType  redis operateType
      * @param      string  $node         hash node in the hash ring
      *
-     * @return     Redis\Proxy\Extensions\ExtensionsAbstract
+     * @return     Redis\Drivers\DriversInterface
      */
     private function getConnection($operateType, $node)
     {

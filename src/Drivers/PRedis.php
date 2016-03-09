@@ -1,8 +1,8 @@
 <?php
 
-namespace Redis\Proxy\Extensions;
+namespace Redis\Drivers;
 
-class PRedis extends ExtensionsAbstract
+class PRedis implements DriversInterface
 {
     public function __construct(array $config)
     {

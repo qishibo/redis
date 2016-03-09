@@ -2,7 +2,7 @@
 
 namespace Redis\Key;
 
-class Md5 extends KeyAbstract
+class Md5 implements KeyInterface
 {
     /**
      * calc the key to hash number

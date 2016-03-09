@@ -1,10 +1,10 @@
 <?php
 
-namespace Redis\Client;
+namespace Redis;
 
-use Redis\Proxy;
+// use Redis\Drivers;
 
-class SingleClient extends ClientAbstract
+class SingleClient extends Client\ClientAbstract
 {
     private $link;
 
@@ -16,7 +16,7 @@ class SingleClient extends ClientAbstract
      */
     public function __construct(
         array $config,
-        $redisExtension = Proxy\RedisFactory::PHPREDIS
+        $redisExtension = Drivers\RedisFactory::PHPREDIS
     )
     {
         parent::__construct($config, $redisExtension);
@@ -38,7 +38,7 @@ class SingleClient extends ClientAbstract
     /**
      * get new redis object, if not cached
      *
-     * @return     Redis\Proxy\Extensions\ExtensionsAbstract
+     * @return     Redis\Drivers\DriversInterface
      */
     private function getConnection()
     {

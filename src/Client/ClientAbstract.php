@@ -3,7 +3,7 @@
 namespace Redis\Client;
 
 use Redis\Key;
-use Redis\Proxy;
+use Redis\Drivers;
 use Redis\Hash;
 
 abstract class ClientAbstract
@@ -43,9 +43,9 @@ abstract class ClientAbstract
 
     /**
      * set php extensions, such as PHPREDIS, PREDIS
-     * see more in Redis\Proxy\RedisFactory
+     * see more in Redis\Drivers\RedisFactory
      *
-     * @param      string  $redisExtension  Redis\Proxy\RedisFactory::PHPREDIS
+     * @param      string  $redisExtension  Redis\Drivers\RedisFactory::PHPREDIS
      */
     public function setRedisExtension($redisExtension)
     {
@@ -57,11 +57,11 @@ abstract class ClientAbstract
      *
      * @param      array   $config  config
      *
-     * @return     Redis\Proxy\Extensions\ExtensionsAbstract
+     * @return     Redis\Drivers\DriversInterface
      */
     public function createConnection(array $config)
     {
-        return Proxy\RedisFactory::getRedis($config, $this->redisExtension);
+        return Drivers\RedisFactory::getRedis($config, $this->redisExtension);
     }
 
     /**

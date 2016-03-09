@@ -1,7 +1,7 @@
 <?php
 
-use Redis\Proxy;
-use Redis\Client;
+use Redis\Drivers\RedisFactory;
+use Redis\WithSlavesClient;
 use Redis\Hash;
 use Redis\Key;
 
@@ -21,9 +21,9 @@ $config = [
 $hash = new Hash\Consistant();
 $Calculator = new Key\Cr32();
 
-$redis = new Client\WithSlavesClient(
+$redis = new WithSlavesClient(
 	$config,
-	Proxy\RedisFactory::PHPREDIS,
+	RedisFactory::PHPREDIS,
 	$hash,
 	$Calculator
 );

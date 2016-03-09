@@ -18,14 +18,14 @@ abstract class ClusterClientAbstract extends ClientAbstract
      *
      * @param      array              $config          config of redis, include host, port, weight
      * @param      string             $redisExtension  type of php redis extension
-     * @param      Hash\HashAbstract  $hash            hash object
-     * @param      Key\KeyAbstract    $keyCalculator   keyCalculator object
+     * @param      Hash\HashInterface  $hash            hash object
+     * @param      Key\KeyInterface    $keyCalculator   keyCalculator object
      */
     public function __construct(
         array $config,
-        $redisExtension = Proxy\RedisFactory::PHPREDIS,
-        Hash\HashAbstract $hash,
-        Key\KeyAbstract $keyCalculator
+        $redisExtension = Drivers\RedisFactory::PHPREDIS,
+        Hash\HashInterface $hash,
+        Key\KeyInterface $keyCalculator
     )
     {
         parent::__construct($config, $redisExtension);
@@ -35,8 +35,8 @@ abstract class ClusterClientAbstract extends ClientAbstract
     /**
      * init
      *
-     * @param      Hash\HashAbstract  $hash           hash object
-     * @param      Key\KeyAbstract    $keyCalculator  keyCalculator object
+     * @param      Hash\HashInterface  $hash           hash object
+     * @param      Key\KeyInterface    $keyCalculator  keyCalculator object
      */
     private function init($hash, $keyCalculator)
     {
@@ -56,9 +56,9 @@ abstract class ClusterClientAbstract extends ClientAbstract
     /**
      * set hash object for find node, such as consistant hash
      *
-     * @param      Hash\HashAbstract  $hash   hash pbject
+     * @param      Hash\HashInterface  $hash   hash pbject
      */
-    public function setHashStragety(Hash\HashAbstract $hash)
+    public function setHashStragety(Hash\HashInterface $hash)
     {
         $this->hash = $hash;
         $this->hash->setKeyCalculator($this->keyCalculator);
@@ -67,9 +67,9 @@ abstract class ClusterClientAbstract extends ClientAbstract
     /**
      * set KeyCalculator to hash object, for calcing key to hash number
      *
-     * @param      Key\KeyAbstract  $keyCalculator  keyCalculator object
+     * @param      Key\KeyInterface  $keyCalculator  keyCalculator object
      */
-    public function setKeyCalculator(Key\KeyAbstract $keyCalculator)
+    public function setKeyCalculator(Key\KeyInterface $keyCalculator)
     {
         $this->keyCalculator = $keyCalculator;
         $this->hash->setKeyCalculator($keyCalculator);
