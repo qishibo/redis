@@ -11,16 +11,16 @@ Redis client for php, which supports single redis server, or redis Master-Slave 
 read & write operations are all executed in the single serve.
 
 ```php
-use Redis\Drivers;
-use Redis\Client;
+use \Redis\SingleClient;
+use \Redis\Drivers\RedisFactory;
 
 include 'Autoload.php';
 
-$config = ['host' => '127.0.0.1', 'port' => 6379];
+$config = ['host' => '127.0.0.1', 'port' => 6379, 'weight' => 1];
 
-$redis = new Client\SingleClient(
+$redis = new SingleClient(
     $config,
-    Drivers\RedisFactory::PHPREDIS
+    RedisFactory::PHPREDIS // this is optional param, default is PHPREDIS driver
 );
 
 $redis->set('name', 'qii404'); // true
@@ -32,8 +32,8 @@ $redis->get('name'); // 'qii404'
 read & write operations executed in the same one server of the cluster.
 
 ```php
-use Redis\Drivers;
-use Redis\Client;
+use Redis\Drivers\RedisFactory;
+use Redis\WithoutSlavesClient;
 use Redis\Hash;
 use Redis\Key;
 
@@ -41,17 +41,17 @@ include 'Autoload.php';
 
 $config = [
     ['host' => '127.0.0.1', 'port' => 6379, 'weight' => 1],
-    ['host' => '127.0.0.1', 'port' => 6380, 'weight' => 2],
+    ['host' => '127.0.0.1', 'port' => 6380],
 ];
 
 $hash = new Hash\Consistant();
 $Calculator = new Key\Cr32();
 
-$redis = new Client\WithoutSlavesClient(
+$redis = new WithoutSlavesClient(
     $config,
-    Drivers\RedisFactory::PHPREDIS,
     $hash,
-    $Calculator
+    $Calculator,
+    RedisFactory::PHPREDIS // this is optional param, default is PHPREDIS driver
 );
 
 // when using the same key, both read & write operation executed in the same server, such as port 6379
@@ -66,8 +66,8 @@ read & write operations executed in the different servers, read from the slave s
 (*You should config it right for 'm' & 's', such as 6381 is slave of 6379, 6382 is slave of 6380*).
 
 ```php
-use Redis\Drivers;
-use Redis\Client;
+use Redis\Drivers\RedisFactory;
+use Redis\WithSlavesClient;
 use Redis\Hash;
 use Redis\Key;
 
@@ -75,7 +75,7 @@ include 'Autoload.php';
 
 $config = [
     'm' =>[
-        ['host' => '127.0.0.1', 'port' => 6379, 'weight' => 2],
+        ['host' => '127.0.0.1', 'port' => 6379, 'weight' => 1],
         ['host' => '127.0.0.1', 'port' => 6380],
     ],
     's' =>[
@@ -87,11 +87,11 @@ $config = [
 $hash = new Hash\Consistant();
 $Calculator = new Key\Cr32();
 
-$redis = new Client\WithSlavesClient(
+$redis = new WithSlavesClient(
     $config,
-    Drivers\RedisFactory::PHPREDIS,
     $hash,
-    $Calculator
+    $Calculator,
+    RedisFactory::PHPREDIS // this is optional param, default is PHPREDIS driver
 );
 
 $redis->zadd('key', 99, 'qii404'); // true; executes in master server, such as port 6379
