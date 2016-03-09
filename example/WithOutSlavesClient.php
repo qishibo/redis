@@ -19,7 +19,7 @@ $redis = new WithoutSlavesClient(
     $config,
     $hash,
     $Calculator,
-    RedisFactory::PHPREDIS
+    RedisFactory::PHPREDIS // this is optional param, default is PHPREDIS driver
 );
 
 // var_dump($redis->delete('zhangman'));die;

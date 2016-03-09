@@ -11,7 +11,7 @@ $config = ['host' => '127.0.0.1', 'port' => 6379, 'weight' => 1];
 
 $redis = new SingleClient(
     $config,
-    RedisFactory::PHPREDIS
+    RedisFactory::PHPREDIS // this is optional param, default is PHPREDIS driver
 );
 
 // var_dump($redis);die;
