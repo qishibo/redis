@@ -18,7 +18,7 @@ class Md5Test extends PHPUnit_Framework_TestCase
 
         $result = $keyCalculator->calc($this->key);
 
-        $this->assertEquals(md5($this->key), $result);
+        $this->assertEquals(substr(md5($this->key), 0, 8), $result);
     }
 }
 // end of file Md5Test.php
