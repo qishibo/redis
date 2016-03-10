@@ -26,7 +26,7 @@ class PhpRedisTest extends PHPUnit_Framework_TestCase
     public function testexecute()
     {
         // $redis = Mockery::mock(Redis::class);
-        $redis->shouldReceive('get')->andReturn(function () {
+        /*$redis->shouldReceive('get')->andReturn(function () {
             return func_get_args();
         });
 
@@ -39,15 +39,15 @@ class PhpRedisTest extends PHPUnit_Framework_TestCase
 
         $http->shouldReceive('execute')->andReturnUsing(function ($url, $method, $body) {
                         return compact('url', 'method', 'body');
-                    });
+                    });*/
         // !is_array($params) && $params = (array) $params;
 
         // return call_user_func_array([$this->redis, $method], $params);
     }
 
-    public function __destruct()
+/*    public function __destruct()
     {
         $this->redis->close();
-    }
+    }*/
 }
 // end of file PhpRedis.php
