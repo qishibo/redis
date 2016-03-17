@@ -73,4 +73,5 @@ class Consistant implements HashInterface
         }
     }
 }
+
 // end of file Consistant.php

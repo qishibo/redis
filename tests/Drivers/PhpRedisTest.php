@@ -50,4 +50,5 @@ class PhpRedisTest extends PHPUnit_Framework_TestCase
         $this->redis->close();
     }*/
 }
+
 // end of file PhpRedis.php

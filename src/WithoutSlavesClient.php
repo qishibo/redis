@@ -2,10 +2,6 @@
 
 namespace Redis;
 
-// use Redis\Drivers;
-// use Redis\Hash;
-// use Redis\Key;
-
 class WithoutSlavesClient extends Client\ClusterClientAbstract
 {
     /**
@@ -59,4 +55,5 @@ class WithoutSlavesClient extends Client\ClusterClientAbstract
         return $this->links[$node] = $this->createConnection($this->config[0][$redisNode2RealNode], $this->redisExtension);
     }
 }
+
 // end of file WithoutSlavesClient.php

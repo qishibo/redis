@@ -11,8 +11,17 @@ abstract class ClientAbstract
     protected $config;
     private $denyOperates = [];
 
+    /**
+     * method which child class must declare,for executing redis methods
+     */
     abstract function doExec($method, $params);
 
+    /**
+     * __construct
+     *
+     * @param     array    $config          config of redis, include host, port, [weight]
+     * @param     string   $redisExtension  type of php redis extension
+     */
     public function __construct(array $config, $redisExtension)
     {
         $this->config         = $config;
@@ -21,6 +30,14 @@ abstract class ClientAbstract
         $this->denyOperates   = $this->getDenyOperates();
     }
 
+    /**
+     * magic method for redis client
+     *
+     * @param     string   $method  method
+     * @param     array    $params  params
+     *
+     * @return    mixed|boolean     result
+     */
     public function __call($method, $params)
     {
         $method = strtolower($method);
@@ -74,3 +91,5 @@ abstract class ClientAbstract
         return ['setoption', 'save', 'bgsave', 'flushdb', 'flushall', 'setoption', 'shutdown', 'slaveof'];
     }
 }
+
+// end of file ClientAbstract.php

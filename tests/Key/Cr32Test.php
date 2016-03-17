@@ -21,4 +21,5 @@ class Cr32Test extends PHPUnit_Framework_TestCase
         $this->assertEquals(crc32($this->key), $result);
     }
 }
+
 // end of file Cr32Test.php

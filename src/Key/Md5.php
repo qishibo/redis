@@ -17,3 +17,5 @@ class Md5 implements KeyInterface
         return substr(md5($key), 0, 8);
     }
 }
+
+// end of file Md5.php

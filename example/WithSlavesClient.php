@@ -9,8 +9,8 @@ include '../src/Autoload.php';
 
 $config = [
     'm' =>[
-        ['host' => '127.0.0.1', 'port' => 6379, 'weight' => 1],
-        ['host' => '127.0.0.1', 'port' => 6380],
+        ['host' => '127.0.0.1', 'port' => 6379, 'weight' => 2],
+        ['host' => '127.0.0.1', 'port' => 6380, 'weight' => 1],
     ],
     's' =>[
         ['host' => '127.0.0.1', 'port' => 6381],
@@ -18,42 +18,17 @@ $config = [
     ]
 ];
 
-// hash stragety, you can also define your stragety in Hash folder
-$hash = new Hash\Consistant();
-
-// key hasher, such as new Md5 or Cr32, you can add it in Key folder
-$Calculator = new Key\Cr32();
-// $Calculator = new Key\Md5();
+$hash       = new Hash\Consistant();
+$calculator = new Key\Cr32();
 
 $redis = new WithSlavesClient(
     $config,
     $hash,
-    $Calculator,
+    $calculator,
     RedisFactory::PHPREDIS // this is optional param, default is PHPREDIS driver
 );
 
-// var_dump($redis->delete('zhangman'));die;
+$redis->zadd('key', 99, 'qii404'); // true; executes in master server, such as port 6379
+$redis->zscore('key', 'qii404'); // 99; executes in slave server, such as port 6381
 
-$field = time() . rand(9, 999);
-$value = uniqid('zhangman=');
-
-var_dump($field, $value);
-
-$r = $redis->hset('shibo', $field, $value);
-var_dump($r);
-
-$r = $redis->hset('shibo1111199', $field, $value);
-var_dump($r);
-
-var_dump($redis->hget('shibo', $field));
-
-$r = $redis->hget('shibo1111199', $field);
-var_dump($r);
-
-var_dump($redis->set('name', uniqid()));
-var_dump($redis->get('name'));
-var_dump($redis->set('age', uniqid()));
-var_dump($redis->get('age'));
-
-// var_dump($redis);
-// var_dump($redis->randomkey());
+// end of file WithSlavesClient.php

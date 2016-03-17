@@ -2,8 +2,6 @@
 
 namespace Redis;
 
-// use Redis\Drivers;
-
 class SingleClient extends Client\ClientAbstract
 {
     private $link;
@@ -49,4 +47,5 @@ class SingleClient extends Client\ClientAbstract
     }
 
 }
+
 // end of file SingleClient.php

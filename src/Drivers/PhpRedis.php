@@ -4,6 +4,11 @@ namespace Redis\Drivers;
 
 class PhpRedis implements DriversInterface
 {
+    /**
+     * __construct
+     *
+     * @param array $config config of redis, include host, port, weight
+     */
     public function __construct(array $config)
     {
         $this->config = $config;
@@ -12,17 +17,26 @@ class PhpRedis implements DriversInterface
             $this->redis  = new \Redis();
         }
         catch (\Exception $e) {
-            exit($e->geeMessage() . ' Please check your phpredis extension...');
+            exit($e->getMessage() . ' Please check your phpredis extension...');
         }
 
         try {
             $this->redis->connect($config['host'], $config['port']);
         }
         catch (\Exception $e) {
-            exit($e->geeMessage() . ' Cant\'t create connection with your phpredis extension...');
+            // todo: define manual Exception
+            throw new Exception('Cant\'t create connection to redis server, ' . $e->getMessage());
         }
     }
 
+    /**
+     * call redis class to executing methods finally
+     *
+     * @param  string $method redis method
+     * @param  array  $params params
+     *
+     * @return mixed          result
+     */
     public function execute($method, $params)
     {
         !is_array($params) && $params = (array) $params;
@@ -30,9 +44,13 @@ class PhpRedis implements DriversInterface
         return call_user_func_array([$this->redis, $method], $params);
     }
 
+    /**
+     * close the redis connection
+     */
     public function __destruct()
     {
         $this->redis->close();
     }
 }
+
 // end of file PhpRedis.php

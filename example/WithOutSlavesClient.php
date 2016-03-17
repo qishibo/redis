@@ -12,41 +12,17 @@ $config = [
     ['host' => '127.0.0.1', 'port' => 6380],
 ];
 
-// hash stragety, you can also define your stragety in Hash folder
-$hash = new Hash\Consistant();
-
-// key hasher, such as new Md5 or Cr32, you can add it in Key folder
-$Calculator = new Key\Cr32();
-// $Calculator = new Key\Md5();
+$hash       = new Hash\Consistant();
+$calculator = new Key\Cr32();
 
 $redis = new WithoutSlavesClient(
     $config,
     $hash,
-    $Calculator,
+    $calculator,
     RedisFactory::PHPREDIS // this is optional param, default is PHPREDIS driver
 );
 
-// var_dump($redis->delete('zhangman'));die;
+$redis->hset('profile', 'name', 'qii44'); // true
+$redis->hget('profile', 'name'); // 'qii404'
 
-$field = time() . rand(9, 999);
-$value = uniqid('zhangman=');
-
-echo "field is {$field}, value is {$value}\n\n";
-
-var_dump($redis->hset('shibo', $field, $value));
-
-var_dump($redis->hset('shibo1111199', $field, $value));
-
-var_dump($redis->hget('shibo', $field));
-
-var_dump($redis->hget('shibo1111199', $field));
-
-var_dump('=================');
-
-var_dump($redis->set('name', uniqid()));
-var_dump($redis->get('name'));
-var_dump($redis->set('age', uniqid()));
-var_dump($redis->get('age'));
-
-// var_dump($redis);
-// var_dump($redis->randomkey());
+// end of file WithoutSlavesClient.php

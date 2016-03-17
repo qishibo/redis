@@ -66,13 +66,13 @@ $config = [
 $hash = new Hash\Consistant();
 
 // key hasher, such as new Md5 or Cr32, you can add it in Key folder
-$Calculator = new Key\Cr32();
-// $Calculator = new Key\Md5();
+$calculator = new Key\Cr32();
+// $calculator = new Key\Md5();
 
 $redis = new WithoutSlavesClient(
     $config,
     $hash,
-    $Calculator,
+    $calculator,
     RedisFactory::PHPREDIS // this is optional param, default is PHPREDIS driver
 );
 
@@ -110,13 +110,13 @@ $config = [
 $hash = new Hash\Consistant();
 
 // key hasher, such as new Md5 or Cr32, you can add it in Key folder
-$Calculator = new Key\Cr32();
-// $Calculator = new Key\Md5();
+$calculator = new Key\Cr32();
+// $calculator = new Key\Md5();
 
 $redis = new WithSlavesClient(
     $config,
     $hash,
-    $Calculator,
+    $calculator,
     RedisFactory::PHPREDIS // this is optional param, default is PHPREDIS driver
 );
 

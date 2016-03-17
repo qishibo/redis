@@ -34,4 +34,5 @@ class RedisFactory
         return $redis;
     }
 }
+
 // end of file RedisFactory.php

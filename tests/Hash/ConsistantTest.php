@@ -39,4 +39,5 @@ class ConsistantHashTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($node, $findNode);
     }
 }
+
 // end of file Cr32Test.php

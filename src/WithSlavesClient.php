@@ -2,10 +2,6 @@
 
 namespace Redis;
 
-// use Redis\Drivers;
-// use Redis\Hash;
-// use Redis\Key;
-
 class WithSlavesClient extends Client\ClusterClientAbstract
 {
 
@@ -106,5 +102,6 @@ class WithSlavesClient extends Client\ClusterClientAbstract
     {
         return ['get', 'exists', 'getmultiple', 'lsize', 'lindex', 'lget', 'lrange', 'lgetrange', 'sismember', 'scontains', 'scard', 'ssize', 'srandmember', 'sinter', 'sinterstore', 'sunion', 'sunionstore', 'sdiff', 'sdiffstore', 'smembers', 'sgetmembers', 'randomkey', 'keys', 'getkeys', 'dbsize', 'type', 'getrange', 'strlen', 'getbit', 'info', 'ttl', 'zrange', 'zrevrange', 'zrangebyscore', 'zrevrangebyscore', 'zcount', 'zsize', 'zcard', 'zscore', 'zrank', 'zrevrank', 'zunion', 'zinter', 'hget', 'hlen', 'hkeys', 'hvals', 'hgetall', 'hexists', 'hmget'];
     }
-
 }
+
+// end of file WithSlavesClient.php

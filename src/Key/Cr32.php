@@ -16,3 +16,5 @@ class Cr32 implements KeyInterface
         return crc32($key);
     }
 }
+
+// end of file Cr32.php

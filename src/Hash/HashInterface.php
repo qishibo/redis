@@ -22,3 +22,5 @@ interface HashInterface
     public function setKeyCalculator(Key\KeyInterface $keyCalculator);
 
 }
+
+// end of file HashInterface.php
