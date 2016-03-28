@@ -1,7 +1,6 @@
 # PHP Redis
 Redis client for php, which supports single redis server, or redis Master-Slave clusters.
 
-*building...*
 
 ## Install
 
