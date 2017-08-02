@@ -23,6 +23,8 @@ $redis = new WithoutSlavesClient(
 );
 
 $redis->hset('profile', 'name', 'qii44'); // true
-$redis->hget('profile', 'name'); // 'qii404'
+$r = $redis->hget('profile', 'name'); // 'qii404'
+
+var_dump($r);
 
 // end of file WithoutSlavesClient.php

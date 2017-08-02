@@ -29,6 +29,8 @@ $redis = new WithSlavesClient(
 );
 
 $redis->zadd('key', 99, 'qii404'); // true; executes in master server, such as port 6379
-$redis->zscore('key', 'qii404'); // 99; executes in slave server, such as port 6381
+$r = $redis->zscore('key', 'qii404'); // 99; executes in slave server, such as port 6381
+
+var_dump($r);
 
 // end of file WithSlavesClient.php

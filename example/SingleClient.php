@@ -5,7 +5,7 @@ use \Redis\Drivers\RedisFactory;
 
 include '../src/Autoload.php';
 
-$config = ['host' => '127.0.0.1', 'port' => 6379, 'weight' => 1];
+$config = ['host' => '127.0.0.1', 'port' => 6379, 'weight' => 1, 'auth' => 'qii'];
 
 $redis  = new SingleClient(
     $config,
@@ -13,6 +13,8 @@ $redis  = new SingleClient(
 );
 
 $redis->set('name', 'qii404'); // true
-$redis->get('name'); // 'qii404'
+$r = $redis->get('name'); // 'qii404'
+
+var_dump($r);
 
 // end of file SingleClient.php
