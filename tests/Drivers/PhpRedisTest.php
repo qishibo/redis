@@ -12,14 +12,14 @@ class PhpRedisTest extends PHPUnit_Framework_TestCase
             $this->redis  = new \Redis();
         }
         catch (\Exception $e) {
-            exit($e->geeMessage() . ' Please check your phpredis extension...');
+            exit($e->getMessage() . ' Please check your phpredis extension...');
         }
 
         try {
             $this->redis->connect($config['host'], $config['port']);
         }
         catch (\Exception $e) {
-            exit($e->geeMessage() . ' Cant\'t create connection with your phpredis extension...');
+            exit($e->getMessage() . ' Cant\'t create connection with your phpredis extension...');
         }
     }*/
 
