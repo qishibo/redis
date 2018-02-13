@@ -25,7 +25,7 @@ class PhpRedis implements DriversInterface
         }
         catch (\Exception $e) {
             // todo: define manual Exception
-            throw new Exception('Cant\'t create connection to redis server, ' . $e->getMessage());
+            throw new \Exception('Cant\'t create connection to redis server, ' . $e->getMessage());
         }
 
         isset($config['auth']) && $this->redis->auth($config['auth']);
