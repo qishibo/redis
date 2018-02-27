@@ -1,4 +1,4 @@
-<phpunit bootstrap="vendor/autoload.php">
+<phpunit bootstrap="src/Autoload.php">
     <testsuites>
         <testsuite name="Redis Test Suit">
             <directory>tests</directory>
