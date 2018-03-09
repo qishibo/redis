@@ -1,16 +1,16 @@
 <?php
 
 use Redis\Key;
-use Redis\Hash\Consistant;
+use Redis\Hash\Consistent;
 
-class ConsistantHashTest extends PHPUnit_Framework_TestCase
+class ConsistentHashTest extends PHPUnit_Framework_TestCase
 {
     /**
      * Test addNode();
      */
     public function testaddNodeCr32()
     {
-        $hash = new Consistant();
+        $hash = new Consistent();
         $hash->setKeyCalculator(new Key\Cr32());
 
         $node = 'u0';
@@ -27,7 +27,7 @@ class ConsistantHashTest extends PHPUnit_Framework_TestCase
      */
     public function testaddNodeMd5()
     {
-        $hash = new Consistant();
+        $hash = new Consistent();
         $hash->setKeyCalculator(new Key\Md5());
 
         $node = 'u0';

@@ -4,25 +4,31 @@ namespace Redis\Drivers;
 
 class RedisFactory
 {
+    /**
+     * phpredis extension driver
+     */
     const PHPREDIS = 'PhpRedis';
+
+    /**
+     * predis driver
+     */
     const PREDIS   = 'PRedis';
 
     /**
-     * [getRedis description]
+     * get redis instance
      *
      * @param  array  $config [description]
      * @param  string $type   default is phpredis
      *
-     * @return \Drivers\ExtensionDriversAbstract         [description]
+     * @return \Redis\Drivers\DriversInterface         [description]
+     * @throws \Exception
      */
     public static function getRedis(array $config, $type = self::PHPREDIS)
     {
         switch ($type) {
             case self::PHPREDIS:
             case self::PREDIS:
-                //there is a keng here, when use string in new class,the namespace must be full
                 $redisClassName = '\\Redis\\Drivers\\' . $type;
-
                 $redis = new $redisClassName($config);
 
                 break;

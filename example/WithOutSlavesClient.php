@@ -1,7 +1,7 @@
 <?php
 
 use Redis\Drivers\RedisFactory;
-use Redis\WithoutSlavesClient;
+use Redis\ClusterClient;
 use Redis\Hash;
 use Redis\Key;
 
@@ -12,10 +12,10 @@ $config = [
     ['host' => '127.0.0.1', 'port' => 6380],
 ];
 
-$hash       = new Hash\Consistant();
+$hash       = new Hash\Consistent();
 $calculator = new Key\Cr32();
 
-$redis = new WithoutSlavesClient(
+$redis = new ClusterClient(
     $config,
     $hash,
     $calculator,
@@ -27,4 +27,4 @@ $r = $redis->hget('profile', 'name'); // 'qii404'
 
 var_dump($r);
 
-// end of file WithoutSlavesClient.php
+// end of file ClusterClient.php

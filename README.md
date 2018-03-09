@@ -1,5 +1,5 @@
 # PHP Redis
-Redis client for php, which supports single redis server, or redis Master-Slave clusters.
+Redis client for php, which supports single redis server, or redis Master-Slave clusters. Base on [phpredis](https://github.com/phpredis/phpredis) extension.
 
 
 ## Install
@@ -23,59 +23,67 @@ or in your `composer.json`
 
 ## Example
 
-1.**single redis server**
+1.**Single Redis Server**
 
-read & write operations are all executed in the single serve.
+read & write operations are all executed in a single redis-server.
 
 ```php
 use \Redis\SingleClient;
-use \Redis\Drivers\RedisFactory;
 
-include 'Autoload.php';
+include 'Autoload.php'; // if installed by composer, remove this;
 
-$config = ['host' => '127.0.0.1', 'port' => 6379, 'weight' => 1];
+$config = ['host' => '127.0.0.1', 'port' => 6379];
 
 // if need auth
-// $config = ['host' => '127.0.0.1', 'port' => 6379, 'weight' => 1, 'auth' => 'qii'];
+$config = ['host' => '127.0.0.1', 'port' => 6379, 'auth' => 'qii'];
 
-$redis = new SingleClient(
-    $config,
-    RedisFactory::PHPREDIS // this is optional param, default is PHPREDIS driver
-);
+$redis = new SingleClient($config);
 
 $redis->set('name', 'qii404'); // true
 $redis->get('name'); // 'qii404'
 ```
 
-2.**redis cluster without slaves**
-
-read & write operations executed in the same one server of the cluster.
+_In fact, if you are using a single redis-server, you'd better use phpredis extension directly for a better performance:_
 
 ```php
-use Redis\Drivers\RedisFactory;
-use Redis\WithoutSlavesClient;
+$redis = new \Redis();
+$redis->connect('127.0.0.1', 6379);
+$redis->get('name');
+```
+
+2.**Redis Cluster Without Slaves**
+
+use several redis-servers as a cluster, keys are hashed into these servers, read & write operations for a key are executed in the same one of the servers.
+
+```php
+use Redis\ClusterClient;
 use Redis\Hash;
 use Redis\Key;
 
-include 'Autoload.php';
+include 'Autoload.php'; // if installed by composer, remove this;
 
 $config = [
-    ['host' => '127.0.0.1', 'port' => 6379, 'weight' => 1],
+    ['host' => '127.0.0.1', 'port' => 6379],
     ['host' => '127.0.0.1', 'port' => 6380],
 ];
 
+// 'weight' is optional, default is 1, and you can define it to any number bigger than 0.
+$config = [
+    ['host' => '127.0.0.1', 'port' => 6379, 'weight' => 1], // weight: 1/(1+2) 33.3%
+    ['host' => '127.0.0.1', 'port' => 6380, 'weight' => 2], // weight: 2/(1+2) 66.6%
+];
+
 // hash stragety, you can also define your stragety in Hash folder
-$hash = new Hash\Consistant();
+$hash = new Hash\Consistent();
 
 // key hasher, such as new Md5 or Cr32, you can add it in Key folder
 $calculator = new Key\Cr32();
 // $calculator = new Key\Md5();
 
-$redis = new WithoutSlavesClient(
+$redis = new ClusterClient(
     $config,
     $hash,
-    $calculator,
-    RedisFactory::PHPREDIS // this is optional param, default is PHPREDIS driver
+    $calculator
 );
 
 // when using the same key, both read & write operation executed in the same server, such as port 6379
@@ -95,7 +103,7 @@ use Redis\WithSlavesClient;
 use Redis\Hash;
 use Redis\Key;
 
-include 'Autoload.php';
+include 'Autoload.php'; // if installed by composer, remove this;
 
 $config = [
     'm' =>[
@@ -109,7 +117,7 @@ $config = [
 ];
 
 // hash stragety, you can also define your stragety in Hash folder
-$hash = new Hash\Consistant();
+$hash = new Hash\Consistent();
 
 // key hasher, such as new Md5 or Cr32, you can add it in Key folder
 $calculator = new Key\Cr32();

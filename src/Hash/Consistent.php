@@ -2,15 +2,28 @@
 
 namespace Redis\Hash;
 
-use Redis\Key;
+use Redis\Key\KeyInterface;
 
-class Consistant implements HashInterface
+class Consistent implements HashInterface
 {
+    /**
+     * @var KeyInterface key calc
+     */
     public $keyCalculator;
+
+    /**
+     * @var array position2nodes
+     */
     private $position2Node;
 
+    /**
+     * @var int default replicas
+     */
     private $replicas = 128;
 
+    /**
+     * @var bool key sorted flag
+     */
     private $positionSorted = false;
 
     /**
@@ -18,6 +31,8 @@ class Consistant implements HashInterface
      *
      * @param      string   $node    server node name
      * @param      integer  $weight  weight in the servers
+     *
+     * @return void
      */
     public function addNode($node, $weight = 1)
     {
@@ -53,17 +68,20 @@ class Consistant implements HashInterface
     }
 
     /**
-     * set the KeyCalculator, which use for calcing key to hash Number
+     * set the KeyCalculator, which use for calculating key to hash Number
      *
-     * @param      Key\KeyInterface  $keyCalculator  KeyCalculator
+     * @param      KeyInterface  $keyCalculator  KeyCalculator
+     *
+     * @return self
      */
-    public function setKeyCalculator(Key\KeyInterface $keyCalculator)
+    public function setKeyCalculator(KeyInterface $keyCalculator)
     {
         $this->keyCalculator = $keyCalculator;
+        return $this;
     }
 
     /**
-     * sort the position2Node array,make it a right consistant hash ring
+     * sort the position2Node array,make it a right consistent hash ring
      */
     private function checkSortNode()
     {
@@ -74,4 +92,4 @@ class Consistant implements HashInterface
     }
 }
 
-// end of file Consistant.php
+// end of file Consistent.php

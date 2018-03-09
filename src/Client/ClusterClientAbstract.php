@@ -2,30 +2,46 @@
 
 namespace Redis\Client;
 
-use Redis\Hash;
-use Redis\Key;
+use Redis\Hash\HashInterface;
+use Redis\Hash\Consistent;
+use Redis\Key\KeyInterface;
+use Redis\Key\Cr32;
 
 abstract class ClusterClientAbstract extends ClientAbstract
 {
+    /**
+     * @var array link pools
+     */
     protected $links;
+
+    /**
+     * @var HashInterface hasher
+     */
     protected $hash;
+
+    /**
+     * @var KeyInterface key calculator
+     */
     protected $keyCalculator;
 
+    /**
+     * @var string node pre
+     */
     protected $nodePre = 'qii';
 
     /**
      * __construct
      *
-     * @param      array              $config          config of redis, include host, port, weight
-     * @param      string             $redisExtension  type of php redis extension
-     * @param      Hash\HashInterface  $hash            hash object
-     * @param      Key\KeyInterface    $keyCalculator   keyCalculator object
+     * @param      array          $config          config of redis, include host, port, weight
+     * @param      HashInterface  $hash            hash object
+     * @param      KeyInterface   $keyCalculator   keyCalculator object
+     * @param      string         $redisExtension  type of php redis extension
      */
     public function __construct(
         array $config,
-        Hash\HashInterface $hash,
-        Key\KeyInterface $keyCalculator,
-        $redisExtension = Drivers\RedisFactory::PHPREDIS
+        HashInterface $hash = null,
+        KeyInterface $keyCalculator = null,
+        $redisExtension = null
     )
     {
         parent::__construct($config, $redisExtension);
@@ -35,13 +51,13 @@ abstract class ClusterClientAbstract extends ClientAbstract
     /**
      * init
      *
-     * @param      Hash\HashInterface  $hash           hash object
-     * @param      Key\KeyInterface    $keyCalculator  keyCalculator object
+     * @param      HashInterface  $hash           hash object
+     * @param      KeyInterface   $keyCalculator  keyCalculator object
      */
     private function init($hash, $keyCalculator)
     {
-        $this->hash          = $hash;
-        $this->keyCalculator = $keyCalculator;
+        $this->hash          = $hash ?: new Consistent();
+        $this->keyCalculator = $keyCalculator ?: new Cr32();
 
         $this->hash->setKeyCalculator($this->keyCalculator);
 
@@ -54,22 +70,22 @@ abstract class ClusterClientAbstract extends ClientAbstract
     }
 
     /**
-     * set hash object for find node, such as consistant hash
+     * set hash object for find node, such as consistent hash
      *
-     * @param      Hash\HashInterface  $hash   hash pbject
+     * @param      HashInterface  $hash   hash pbject
      */
-    public function setHashStragety(Hash\HashInterface $hash)
+    public function setHashStragety(HashInterface $hash)
     {
         $this->hash = $hash;
         $this->hash->setKeyCalculator($this->keyCalculator);
     }
 
     /**
-     * set KeyCalculator to hash object, for calcing key to hash number
+     * set KeyCalculator to hash object, for calculating key to hash number
      *
-     * @param      Key\KeyInterface  $keyCalculator  keyCalculator object
+     * @param      KeyInterface  $keyCalculator  keyCalculator object
      */
-    public function setKeyCalculator(Key\KeyInterface $keyCalculator)
+    public function setKeyCalculator(KeyInterface $keyCalculator)
     {
         $this->keyCalculator = $keyCalculator;
         $this->hash->setKeyCalculator($keyCalculator);

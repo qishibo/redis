@@ -2,8 +2,15 @@
 
 namespace Redis;
 
-class SingleClient extends Client\ClientAbstract
+use Redis\Drivers\DriversInterface;
+use Redis\Drivers\RedisFactory;
+use Redis\Client\ClientAbstract;
+
+class SingleClient extends ClientAbstract
 {
+    /**
+     * @var DriversInterface redis instance
+     */
     private $link;
 
     /**
@@ -14,7 +21,7 @@ class SingleClient extends Client\ClientAbstract
      */
     public function __construct(
         array $config,
-        $redisExtension = Drivers\RedisFactory::PHPREDIS
+        $redisExtension = RedisFactory::PHPREDIS
     )
     {
         parent::__construct($config, $redisExtension);
@@ -36,14 +43,14 @@ class SingleClient extends Client\ClientAbstract
     /**
      * get new redis object, if not cached
      *
-     * @return     Redis\Drivers\DriversInterface
+     * @return     DriversInterface
      */
     private function getConnection()
     {
         if (!is_null($this->link)) {
             return $this->link;
         }
-        return $this->link = $this->createConnection($this->config, $this->redisExtension);;
+        return $this->link = $this->createConnection($this->config);
     }
 
 }

@@ -4,7 +4,7 @@
     "authors": [
         {
             "name": "qii404",
-            "email": "www.qii@qq.com"
+            "email": "qii404@126.com"
         }
     ],
     "autoload": {
@@ -12,8 +12,11 @@
             "Redis\\": "src/"
         }
     },
-    "require": {},
+    "require": {
+        "php": ">=5.4"
+    },
     "require-dev": {
         "mockery/mockery": "^1.0@dev"
-    }
+    },
+    "minimum-stability": "dev"
 }

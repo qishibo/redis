@@ -18,7 +18,7 @@ $config = [
     ]
 ];
 
-$hash       = new Hash\Consistant();
+$hash       = new Hash\Consistent();
 $calculator = new Key\Cr32();
 
 $redis = new WithSlavesClient(

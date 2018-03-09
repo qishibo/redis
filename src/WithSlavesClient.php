@@ -2,13 +2,29 @@
 
 namespace Redis;
 
-class WithSlavesClient extends Client\ClusterClientAbstract
+use Redis\Client\ClusterClientAbstract;
+use Redis\Drivers\DriversInterface;
+
+class WithSlavesClient extends ClusterClientAbstract
 {
+    /**
+     * master key
+     */
+    const MASTER = 'master';
 
-    const MASTER = 'm';
-    const SLAVE = 's';
+    /**
+     * slave key
+     */
+    const SLAVE = 'slave';
 
+    /**
+     * @var array write operations
+     */
     private $masterOperate;
+
+    /**
+     * @var array read operations
+     */
     private $slaveOperate;
 
     /**
@@ -21,8 +37,8 @@ class WithSlavesClient extends Client\ClusterClientAbstract
      */
     public function __construct(
         array $config,
-        Hash\HashInterface $hash,
-        Key\KeyInterface $keyCalculator,
+        Hash\HashInterface $hash = null,
+        Key\KeyInterface $keyCalculator = null,
         $redisExtension = Drivers\RedisFactory::PHPREDIS
     )
     {
@@ -68,7 +84,7 @@ class WithSlavesClient extends Client\ClusterClientAbstract
      * @param      string  $operateType  redis operateType
      * @param      string  $node         hash node in the hash ring
      *
-     * @return     Redis\Drivers\DriversInterface
+     * @return     DriversInterface
      */
     private function getConnection($operateType, $node)
     {
@@ -76,9 +92,10 @@ class WithSlavesClient extends Client\ClusterClientAbstract
             return $this->links[$operateType][$node];
         }
 
+        // change to real config index
         $redisNode2RealNode = str_replace($this->nodePre, '', $node);
 
-        return $this->links[$operateType][$node] = $this->createConnection($this->config[$operateType][$redisNode2RealNode], $this->redisExtension);
+        return $this->links[$operateType][$node] = $this->createConnection($this->config[$operateType][$redisNode2RealNode]);
     }
 
     /**
@@ -89,7 +106,61 @@ class WithSlavesClient extends Client\ClusterClientAbstract
      */
     private function getMasterOperate()
     {
-        return ['set', 'setex', 'setnx', 'del', 'delete', 'incr', 'incrby', 'decr', 'decrby', 'lpush', 'rpush', 'lpushx', 'rpushx', 'lpop', 'rpop', 'blpop', 'brpop', 'lset', 'ltrim', 'listtrim', 'lrem', 'lremove', 'linsert', 'sadd', 'srem', 'sremove', 'smove', 'spop', 'getset', 'move', 'rename', 'renamekey', 'renamenx', 'settimeout', 'expire', 'expireat', 'append', 'setrange', 'setbit', 'sort', 'persist', 'mset', 'rpoplpush', 'zadd', 'zdelete', 'zrem', 'zremrangebyscore', 'zdeleterangebyscore', 'zincrby', 'hset', 'hincrby', 'hmset', 'hdel'];
+        return [
+            'set',
+            'setex',
+            'setnx',
+            'del',
+            'delete',
+            'incr',
+            'incrby',
+            'decr',
+            'decrby',
+            'lpush',
+            'rpush',
+            'lpushx',
+            'rpushx',
+            'lpop',
+            'rpop',
+            'blpop',
+            'brpop',
+            'lset',
+            'ltrim',
+            'listtrim',
+            'lrem',
+            'lremove',
+            'linsert',
+            'sadd',
+            'srem',
+            'sremove',
+            'smove',
+            'spop',
+            'getset',
+            'move',
+            'rename',
+            'renamekey',
+            'renamenx',
+            'settimeout',
+            'expire',
+            'expireat',
+            'append',
+            'setrange',
+            'setbit',
+            'sort',
+            'persist',
+            'mset',
+            'rpoplpush',
+            'zadd',
+            'zdelete',
+            'zrem',
+            'zremrangebyscore',
+            'zdeleterangebyscore',
+            'zincrby',
+            'hset',
+            'hincrby',
+            'hmset',
+            'hdel'
+        ];
     }
 
     /**
@@ -100,7 +171,58 @@ class WithSlavesClient extends Client\ClusterClientAbstract
      */
     private function getSlaveOperate()
     {
-        return ['get', 'exists', 'getmultiple', 'lsize', 'lindex', 'lget', 'lrange', 'lgetrange', 'sismember', 'scontains', 'scard', 'ssize', 'srandmember', 'sinter', 'sinterstore', 'sunion', 'sunionstore', 'sdiff', 'sdiffstore', 'smembers', 'sgetmembers', 'randomkey', 'keys', 'getkeys', 'dbsize', 'type', 'getrange', 'strlen', 'getbit', 'info', 'ttl', 'zrange', 'zrevrange', 'zrangebyscore', 'zrevrangebyscore', 'zcount', 'zsize', 'zcard', 'zscore', 'zrank', 'zrevrank', 'zunion', 'zinter', 'hget', 'hlen', 'hkeys', 'hvals', 'hgetall', 'hexists', 'hmget'];
+        return [
+            'get',
+            'exists',
+            'getmultiple',
+            'lsize',
+            'lindex',
+            'lget',
+            'lrange',
+            'lgetrange',
+            'sismember',
+            'scontains',
+            'scard',
+            'ssize',
+            'srandmember',
+            'sinter',
+            'sinterstore',
+            'sunion',
+            'sunionstore',
+            'sdiff',
+            'sdiffstore',
+            'smembers',
+            'sgetmembers',
+            'randomkey',
+            'keys',
+            'getkeys',
+            'dbsize',
+            'type',
+            'getrange',
+            'strlen',
+            'getbit',
+            'info',
+            'ttl',
+            'zrange',
+            'zrevrange',
+            'zrangebyscore',
+            'zrevrangebyscore',
+            'zcount',
+            'zsize',
+            'zcard',
+            'zscore',
+            'zrank',
+            'zrevrank',
+            'zunion',
+            'zinter',
+            'hget',
+            'hlen',
+            'hkeys',
+            'hvals',
+            'hgetall',
+            'hexists',
+            'hmget'
+        ];
     }
 }
 

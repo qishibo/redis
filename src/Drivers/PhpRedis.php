@@ -5,9 +5,21 @@ namespace Redis\Drivers;
 class PhpRedis implements DriversInterface
 {
     /**
+     * @var array config
+     */
+    private $config;
+
+    /**
+     * @var \Redis redis instance
+     */
+    private $redis;
+
+    /**
      * __construct
      *
      * @param array $config config of redis, include host, port, weight
+     *
+     * @throws \Exception
      */
     public function __construct(array $config)
     {

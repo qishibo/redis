@@ -13,7 +13,6 @@ class Md5 implements KeyInterface
      */
     public function calc($key)
     {
-        // return md5($key);
         return substr(md5($key), 0, 8);
     }
 }

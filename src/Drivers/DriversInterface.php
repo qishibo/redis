@@ -6,6 +6,11 @@ interface DriversInterface
 {
     /**
      * use redis extension executing method
+     *
+     * @param $method
+     * @param $params
+     *
+     * @return mixed
      */
     public function execute($method, $params);
 

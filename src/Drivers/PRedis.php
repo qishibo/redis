@@ -5,6 +5,16 @@ namespace Redis\Drivers;
 class PRedis implements DriversInterface
 {
     /**
+     * @var array config
+     */
+    private $config;
+
+    /**
+     * @var  redis instance
+     */
+    private $redis;
+
+    /**
      * __construct
      *
      * @param array $config config of redis, include host, port, weight
@@ -12,31 +22,19 @@ class PRedis implements DriversInterface
     public function __construct(array $config)
     {
         $this->config = $config;
-        // $this->redis = new \Redis($config['host'], $config['port']);
+        exit('not support yet!');
     }
 
     /**
-     * call redis class to executing methods finally
+     * function execute
      *
-     * @param  string $method redis method
-     * @param  array  $params params
+     * @param $method
+     * @param $params
      *
-     * @return mixed          result
      */
-    public function execute($method, $params)
-    {
-        !is_array($params) && $params = (array) $params;
+    public function execute($method, $params) {}
 
-        // return call_user_func_array([$this->redis, $method], $params);
-    }
-
-    /**
-     * close the redis connection
-     */
-    public function __destruct()
-    {
-        // $this->redis->close();
-    }
+    public function __destruct() {}
 }
 
 // end of file PRedis.php

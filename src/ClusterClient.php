@@ -2,21 +2,27 @@
 
 namespace Redis;
 
-class WithoutSlavesClient extends Client\ClusterClientAbstract
+use Redis\Client\ClusterClientAbstract;
+use Redis\Drivers\DriversInterface;
+use Redis\Hash\HashInterface;
+use Redis\Key\KeyInterface;
+use Redis\Drivers\RedisFactory;
+
+class ClusterClient extends ClusterClientAbstract
 {
     /**
      * __construct
      *
      * @param      array              $config          config of redis, include host, port, weight
      * @param      string             $redisExtension  type of php redis extension
-     * @param      Hash\HashInterface  $hash            hash object
-     * @param      Key\KeyInterface    $keyCalculator   keyCalculator object
+     * @param      HashInterface  $hash            hash object
+     * @param      KeyInterface    $keyCalculator   keyCalculator object
      */
     public function __construct(
         array $config,
-        Hash\HashInterface $hash,
-        Key\KeyInterface $keyCalculator,
-        $redisExtension = Drivers\RedisFactory::PHPREDIS
+        HashInterface $hash = null,
+        KeyInterface $keyCalculator = null,
+        $redisExtension = RedisFactory::PHPREDIS
     )
     {
         parent::__construct([$config], $hash, $keyCalculator, $redisExtension);
@@ -42,7 +48,7 @@ class WithoutSlavesClient extends Client\ClusterClientAbstract
      *
      * @param      string  $node         hash node in the hash ring
      *
-     * @return     Redis\Drivers\DriversInterface
+     * @return     DriversInterface
      */
     private function getConnection($node)
     {
@@ -52,8 +58,8 @@ class WithoutSlavesClient extends Client\ClusterClientAbstract
 
         $redisNode2RealNode = str_replace($this->nodePre, '', $node);
 
-        return $this->links[$node] = $this->createConnection($this->config[0][$redisNode2RealNode], $this->redisExtension);
+        return $this->links[$node] = $this->createConnection($this->config[0][$redisNode2RealNode]);
     }
 }
 
-// end of file WithoutSlavesClient.php
+// end of file ClusterClient.php

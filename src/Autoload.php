@@ -4,6 +4,9 @@ namespace Redis;
 
 class AutoLoader
 {
+    /**
+     * @param string $baseDir app path
+     */
     public function __construct($baseDir = __DIR__)
     {
         $this->baseDir         = $baseDir;
@@ -11,6 +14,9 @@ class AutoLoader
         $this->prefixLength    = strlen($this->nameSpacePrefix);
     }
 
+    /**
+     * register autoload
+     */
     public function register()
     {
         spl_autoload_register(function ($className)
