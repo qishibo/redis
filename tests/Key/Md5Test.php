@@ -10,7 +10,7 @@ class Md5Test extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test calc();
+     * Test calc();.
      */
     public function testcalc()
     {

@@ -1,12 +1,12 @@
 <?php
 
-use Redis\Key;
 use Redis\Hash\Consistant;
+use Redis\Key;
 
 class ConsistantHashTest extends PHPUnit_Framework_TestCase
 {
     /**
-     * Test addNode();
+     * Test addNode();.
      */
     public function testaddNodeCr32()
     {
@@ -23,7 +23,7 @@ class ConsistantHashTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * Test addNode();
+     * Test addNode();.
      */
     public function testaddNodeMd5()
     {

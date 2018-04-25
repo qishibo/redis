@@ -4,7 +4,6 @@ namespace Redis;
 
 class WithSlavesClient extends Client\ClusterClientAbstract
 {
-
     const MASTER = 'm';
     const SLAVE = 's';
 
@@ -12,63 +11,63 @@ class WithSlavesClient extends Client\ClusterClientAbstract
     private $slaveOperate;
 
     /**
-     * __construct
+     * __construct.
      *
-     * @param      array              $config          config of redis, include host, port, weight
-     * @param      string             $redisExtension  type of php redis extension
-     * @param      Hash\HashInterface  $hash            hash object
-     * @param      Key\KeyInterface    $keyCalculator   keyCalculator object
+     * @param array              $config         config of redis, include host, port, weight
+     * @param string             $redisExtension type of php redis extension
+     * @param Hash\HashInterface $hash           hash object
+     * @param Key\KeyInterface   $keyCalculator  keyCalculator object
      */
     public function __construct(
         array $config,
         Hash\HashInterface $hash,
         Key\KeyInterface $keyCalculator,
         $redisExtension = Drivers\RedisFactory::PHPREDIS
-    )
-    {
+    ) {
         parent::__construct($config, $hash, $keyCalculator, $redisExtension);
 
         $this->masterOperate = $this->getMasterOperate();
-        $this->slaveOperate  = $this->getSlaveOperate();
+        $this->slaveOperate = $this->getSlaveOperate();
     }
 
     /**
-     * call the redis object to execute data
+     * call the redis object to execute data.
      *
-     * @param      string   $method  method
-     * @param      array   $params  params
+     * @param string $method method
+     * @param array  $params params
      *
-     * @return     boolean|mixed
+     * @return bool|mixed
      */
     public function doExec($method, $params)
     {
-        $node  = $this->hash->lookUp($params[0]);
+        $node = $this->hash->lookUp($params[0]);
 
         return $this->getConnection($this->getType($method), $node)->execute($method, $params);
     }
 
     /**
-     * return redis operateType ,such set should return 'm', get should return 's'
+     * return redis operateType ,such set should return 'm', get should return 's'.
      *
-     * @param      string  $method  redis method
+     * @param string $method redis method
      *
-     * @return     string  type of operate
+     * @return string type of operate
      */
     private function getType($method)
     {
         if (in_array($method, $this->masterOperate)) {
             return self::MASTER;
         }
+
         return self::SLAVE;
     }
 
     /**
-     * get new redis object by operateType and node, if not cached
+     * get new redis object by operateType and node, if not cached.
      *
-     * @param      string  $operateType  redis operateType
-     * @param      string  $node         hash node in the hash ring
+     * @param string $operateType redis operateType
+     * @param string $node        hash node in the hash ring
      *
-     * @return     Redis\Drivers\DriversInterface
+     * @return Redis\Drivers\DriversInterface
      */
     private function getConnection($operateType, $node)
     {
@@ -83,9 +82,9 @@ class WithSlavesClient extends Client\ClusterClientAbstract
 
     /**
      * redis master operates
-     * following operates executes in master server
+     * following operates executes in master server.
      *
-     * @return     array
+     * @return array
      */
     private function getMasterOperate()
     {
@@ -94,9 +93,9 @@ class WithSlavesClient extends Client\ClusterClientAbstract
 
     /**
      * redis slave operates
-     * following operates executes in slave server
+     * following operates executes in slave server.
      *
-     * @return     array
+     * @return array
      */
     private function getSlaveOperate()
     {

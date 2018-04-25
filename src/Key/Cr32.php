@@ -5,11 +5,11 @@ namespace Redis\Key;
 class Cr32 implements KeyInterface
 {
     /**
-     * calc the key to hash number
+     * calc the key to hash number.
      *
-     * @param  string $key redis key
+     * @param string $key redis key
      *
-     * @return int      hash number
+     * @return int hash number
      */
     public function calc($key)
     {

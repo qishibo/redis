@@ -5,7 +5,7 @@ namespace Redis\Drivers;
 class PRedis implements DriversInterface
 {
     /**
-     * __construct
+     * __construct.
      *
      * @param array $config config of redis, include host, port, weight
      */
@@ -16,12 +16,12 @@ class PRedis implements DriversInterface
     }
 
     /**
-     * call redis class to executing methods finally
+     * call redis class to executing methods finally.
      *
-     * @param  string $method redis method
-     * @param  array  $params params
+     * @param string $method redis method
+     * @param array  $params params
      *
-     * @return mixed          result
+     * @return mixed result
      */
     public function execute($method, $params)
     {
@@ -31,7 +31,7 @@ class PRedis implements DriversInterface
     }
 
     /**
-     * close the redis connection
+     * close the redis connection.
      */
     public function __destruct()
     {
