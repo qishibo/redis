@@ -45,10 +45,10 @@ class PhpRedisTest extends PHPUnit_Framework_TestCase
         // return call_user_func_array([$this->redis, $method], $params);
     }
 
-/*    public function __destruct()
-    {
-        $this->redis->close();
-    }*/
+    /*    public function __destruct()
+        {
+            $this->redis->close();
+        }*/
 }
 
 // end of file PhpRedis.php

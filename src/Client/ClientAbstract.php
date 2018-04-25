@@ -2,9 +2,8 @@
 
 namespace Redis\Client;
 
-use Redis\Key;
 use Redis\Drivers;
-use Redis\Hash;
+use Redis\Key;
 
 abstract class ClientAbstract
 {
@@ -12,31 +11,31 @@ abstract class ClientAbstract
     private $denyOperates = [];
 
     /**
-     * method which child class must declare,for executing redis methods
+     * method which child class must declare,for executing redis methods.
      */
-    abstract function doExec($method, $params);
+    abstract public function doExec($method, $params);
 
     /**
-     * __construct
+     * __construct.
      *
-     * @param     array    $config          config of redis, include host, port, [weight]
-     * @param     string   $redisExtension  type of php redis extension
+     * @param array  $config         config of redis, include host, port, [weight]
+     * @param string $redisExtension type of php redis extension
      */
     public function __construct(array $config, $redisExtension)
     {
-        $this->config         = $config;
+        $this->config = $config;
         $this->redisExtension = $redisExtension;
 
-        $this->denyOperates   = $this->getDenyOperates();
+        $this->denyOperates = $this->getDenyOperates();
     }
 
     /**
-     * magic method for redis client
+     * magic method for redis client.
      *
-     * @param     string   $method  method
-     * @param     array    $params  params
+     * @param string $method method
+     * @param array  $params params
      *
-     * @return    mixed|boolean     result
+     * @return mixed|bool result
      */
     public function __call($method, $params)
     {
@@ -60,9 +59,9 @@ abstract class ClientAbstract
 
     /**
      * set php extensions, such as PHPREDIS, PREDIS
-     * see more in Redis\Drivers\RedisFactory
+     * see more in Redis\Drivers\RedisFactory.
      *
-     * @param      string  $redisExtension  Redis\Drivers\RedisFactory::PHPREDIS
+     * @param string $redisExtension Redis\Drivers\RedisFactory::PHPREDIS
      */
     public function setRedisExtension($redisExtension)
     {
@@ -70,11 +69,11 @@ abstract class ClientAbstract
     }
 
     /**
-     * get redis connection
+     * get redis connection.
      *
-     * @param      array   $config  config
+     * @param array $config config
      *
-     * @return     Redis\Drivers\DriversInterface
+     * @return Redis\Drivers\DriversInterface
      */
     public function createConnection(array $config)
     {
@@ -82,9 +81,9 @@ abstract class ClientAbstract
     }
 
     /**
-     * get denied executions,you need to add some methods if you need
+     * get denied executions,you need to add some methods if you need.
      *
-     * @return     array
+     * @return array
      */
     private function getDenyOperates()
     {

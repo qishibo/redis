@@ -1,9 +1,9 @@
 <?php
 
 use Redis\Drivers\RedisFactory;
-use Redis\WithoutSlavesClient;
 use Redis\Hash;
 use Redis\Key;
+use Redis\WithoutSlavesClient;
 
 include '../src/Autoload.php';
 
@@ -12,7 +12,7 @@ $config = [
     ['host' => '127.0.0.1', 'port' => 6380],
 ];
 
-$hash       = new Hash\Consistant();
+$hash = new Hash\Consistant();
 $calculator = new Key\Cr32();
 
 $redis = new WithoutSlavesClient(
